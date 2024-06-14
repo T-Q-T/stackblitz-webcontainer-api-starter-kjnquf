@@ -7,8 +7,15 @@ let webcontainerInstance;
 
 window.addEventListener('load', async () => {
   textareaEl.value = files['index.js'].file.contents;
-  textareaEl.addEventListener('input', (e) => {
+  textareaEl.addEventListener('input',async (e) => {
     writeIndexJS(e.currentTarget.value);
+    if(e.data==='a'){
+      console.log(11)
+      await webcontainerInstance.fs.mkdir('test-qin');
+    }else{
+      const dir = await webcontainerInstance.fs.readdir('/');
+      console.log(dir)
+    }
   });
 
   // Call only once
@@ -39,8 +46,11 @@ async function startDevServer() {
   // Run `npm run start` to start the Express app
   await webcontainerInstance.spawn('npm', ['run', 'start']);
 
+  // await webcontainerInstance.spawn('npm', ['run', 'start:http']);
+  console.log(11)
   // Wait for `server-ready` event
   webcontainerInstance.on('server-ready', (port, url) => {
+    console.log(url)
     iframeEl.src = url;
   });
 }
