@@ -20,13 +20,14 @@ app.listen(port, () => {
   "http.js": {
     file: {
       contents: `
-        const http = require('http');
+import http from  'http';
 
 const hostname = '127.0.0.1';
 const port = 3111;
 
 const server = http.createServer((req, res) => {
   if (req.method === 'GET' && req.url === '/') {
+    console.log('Request received');
     res.statusCode = 200;
     res.setHeader('Content-Type', 'text/plain');
     res.end('Welcome to a WebContainers app! 🥳');
@@ -37,9 +38,8 @@ const server = http.createServer((req, res) => {
 });
 
 server.listen(port, hostname, () => {
-  console.log("App is live at ");
+  console.log("服务启动");
 });
-
         `,
     },
   },
